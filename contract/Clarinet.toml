@@ -1,0 +1,62 @@
+[project]
+name = 'onloan'
+description = ''
+authors = []
+telemetry = true
+cache_dir = './.cache'
+
+[[project.requirements]]
+contract_id = 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-deposit'
+[contracts.sip-010-trait]
+path = 'contracts/traits/sip-010-trait.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.oracle-trait]
+path = 'contracts/traits/oracle-trait.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.pool-trait]
+path = 'contracts/traits/pool-trait.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.pyth-oracle-adapter]
+path = 'contracts/pyth-oracle-adapter.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.onloan-core]
+path = 'contracts/onloan-core.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.lending-pool]
+path = 'contracts/lending-pool.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.collateral-manager]
+path = 'contracts/collateral-manager.clar'
+clarity_version = 4
+epoch = 'latest'
+
+[contracts.liquidation-engine]
+path = 'contracts/liquidation-engine.clar'
+clarity_version = 4
+epoch = 'latest'
+[repl.analysis]
+passes = ['check_checker']
+
+[repl.analysis.lints]
+
+[repl.analysis.check_checker]
+strict = false
+trusted_sender = false
+trusted_caller = false
+callee_filter = false
+
+[repl.remote_data]
+enabled = false
+api_url = 'https://api.hiro.so'
