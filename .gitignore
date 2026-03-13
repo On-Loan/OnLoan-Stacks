@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+.nyc_output/
+
+# Next.js
+frontend/.next/
+frontend/out/
+
+# Production
+frontend/build/
+
+# Misc
+.DS_Store
+*.pem
+*.log
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.testnet
+.env.mainnet
+
+# Clarinet
+.cache/
+history.txt
+
+# IDE
+.vscode/settings.json
+.idea/
+
+# Prompt file (not for public repo)
+PROMPT.md
+
+# OS
+Thumbs.db
