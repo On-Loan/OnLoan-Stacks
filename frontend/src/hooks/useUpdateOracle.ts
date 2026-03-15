@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 import { request } from "@stacks/connect";
-import { Cl } from "@stacks/transactions";
+import { uintCV, stringAsciiCV } from "@stacks/transactions";
 import { DEPLOYER, PYTH_ENDPOINT, PYTH_BTC_USD_FEED, PYTH_STX_USD_FEED } from "@/lib/constants";
 import { useTransactionToast } from "@/components/common/TransactionToast";
 import { useNetwork } from "@/providers/NetworkProvider";
@@ -68,10 +68,10 @@ export function useUpdateOracle() {
         contract: `${DEPLOYER}.pyth-oracle-adapter-v2`,
         functionName: "update-price",
         functionArgs: [
-          Cl.stringAscii("stx"),
-          Cl.uint(stxPrice.price),
-          Cl.uint(stxPrice.confidence),
-          Cl.uint(stxPrice.timestamp),
+          stringAsciiCV("stx"),
+          uintCV(stxPrice.price),
+          uintCV(stxPrice.confidence),
+          uintCV(stxPrice.timestamp),
         ],
         network: networkName,
         postConditionMode: "deny",
@@ -84,10 +84,10 @@ export function useUpdateOracle() {
         contract: `${DEPLOYER}.pyth-oracle-adapter-v2`,
         functionName: "update-price",
         functionArgs: [
-          Cl.stringAscii("sbtc"),
-          Cl.uint(sbtcPrice.price),
-          Cl.uint(sbtcPrice.confidence),
-          Cl.uint(sbtcPrice.timestamp),
+          stringAsciiCV("sbtc"),
+          uintCV(sbtcPrice.price),
+          uintCV(sbtcPrice.confidence),
+          uintCV(sbtcPrice.timestamp),
         ],
         network: networkName,
         postConditionMode: "deny",
@@ -100,10 +100,10 @@ export function useUpdateOracle() {
         contract: `${DEPLOYER}.pyth-oracle-adapter-v2`,
         functionName: "update-price",
         functionArgs: [
-          Cl.stringAscii("usdcx"),
-          Cl.uint(100000000),
-          Cl.uint(10000),
-          Cl.uint(Math.floor(Date.now() / 1000)),
+          stringAsciiCV("usdcx"),
+          uintCV(100000000),
+          uintCV(10000),
+          uintCV(Math.floor(Date.now() / 1000)),
         ],
         network: networkName,
         postConditionMode: "deny",

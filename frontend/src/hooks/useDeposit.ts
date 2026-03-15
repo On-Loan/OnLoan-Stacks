@@ -3,7 +3,7 @@
 import { useCallback, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { request } from "@stacks/connect";
-import { Cl, Pc } from "@stacks/transactions";
+import { uintCV, stringAsciiCV, Pc } from "@stacks/transactions";
 import { DEPLOYER, SBTC_CONTRACT, USDCX_CONTRACT } from "@/lib/constants";
 import { queryKeys } from "@/lib/queryKeys";
 import { useTransactionToast } from "@/components/common/TransactionToast";
@@ -44,7 +44,7 @@ export function useDeposit() {
         const response = await request("stx_callContract", {
           contract: `${DEPLOYER}.lending-pool-v2`,
           functionName: "deposit",
-          functionArgs: [Cl.uint(amount), Cl.stringAscii(assetId)],
+          functionArgs: [uintCV(amount), stringAsciiCV(assetId)],
           network: networkName,
           postConditionMode: "deny",
           postConditions,

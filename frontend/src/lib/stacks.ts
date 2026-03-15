@@ -18,6 +18,15 @@ export function getNetwork(): StacksNetwork {
   }
 }
 
+/** Network config that routes read-only calls through the proxy in the browser */
+export function getReadOnlyNetwork(): StacksNetwork {
+  const base = getNetwork();
+  if (typeof window !== "undefined") {
+    return { ...base, client: { baseUrl: `${window.location.origin}/api/stacks` } };
+  }
+  return base;
+}
+
 export function getApiUrl(): string {
   // In the browser, proxy through Next.js rewrites to avoid CORS
   if (typeof window !== "undefined") return "/api/stacks";

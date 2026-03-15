@@ -1,10 +1,10 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { fetchCallReadOnlyFunction, Cl, cvToValue } from "@stacks/transactions";
-import { DEPLOYER, NETWORK } from "@/lib/constants";
+import { fetchCallReadOnlyFunction, principalCV, stringAsciiCV, cvToValue } from "@stacks/transactions";
+import { DEPLOYER } from "@/lib/constants";
 import { cvField } from "@/lib/clarity";
-import { getApiUrl } from "@/lib/stacks";
+import { getApiUrl, getReadOnlyNetwork } from "@/lib/stacks";
 
 interface LiquidatablePosition {
   borrower: string;
@@ -65,10 +65,10 @@ async function checkLiquidatable(
       contractName: "liquidation-engine-v2",
       functionName: "is-liquidatable",
       functionArgs: [
-        Cl.principal(borrower),
-        Cl.stringAscii(collateralType),
+        principalCV(borrower),
+        stringAsciiCV(collateralType),
       ],
-      network: NETWORK as "mainnet" | "testnet" | "devnet",
+      network: getReadOnlyNetwork(),
       senderAddress: DEPLOYER,
     });
 
@@ -83,10 +83,10 @@ async function checkLiquidatable(
       contractName: "collateral-manager-v2",
       functionName: "get-position",
       functionArgs: [
-        Cl.principal(borrower),
-        Cl.stringAscii(collateralType),
+        principalCV(borrower),
+        stringAsciiCV(collateralType),
       ],
-      network: NETWORK as "mainnet" | "testnet" | "devnet",
+      network: getReadOnlyNetwork(),
       senderAddress: DEPLOYER,
     });
 

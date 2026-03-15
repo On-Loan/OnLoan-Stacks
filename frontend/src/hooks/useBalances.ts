@@ -1,9 +1,9 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { fetchCallReadOnlyFunction, Cl, cvToValue } from "@stacks/transactions";
-import { DEPLOYER, NETWORK, SBTC_CONTRACT, USDCX_CONTRACT } from "@/lib/constants";
-import { getApiUrl } from "@/lib/stacks";
+import { fetchCallReadOnlyFunction, principalCV, stringAsciiCV, cvToValue } from "@stacks/transactions";
+import { DEPLOYER, SBTC_CONTRACT, USDCX_CONTRACT } from "@/lib/constants";
+import { getApiUrl, getReadOnlyNetwork } from "@/lib/stacks";
 import { cvField } from "@/lib/clarity";
 import { useWallet } from "@/providers/WalletProvider";
 
@@ -55,8 +55,8 @@ async function fetchLenderDeposit(
       contractAddress: DEPLOYER,
       contractName: "lending-pool-v2",
       functionName: "get-lender-balance",
-      functionArgs: [Cl.principal(address), Cl.stringAscii(assetId)],
-      network: NETWORK as "mainnet" | "testnet" | "devnet",
+      functionArgs: [principalCV(address), stringAsciiCV(assetId)],
+      network: getReadOnlyNetwork(),
       senderAddress: DEPLOYER,
     });
     const raw = cvToValue(result);

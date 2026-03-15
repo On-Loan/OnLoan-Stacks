@@ -3,7 +3,7 @@
 import { useCallback, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { request } from "@stacks/connect";
-import { Cl, Pc } from "@stacks/transactions";
+import { uintCV, stringAsciiCV, Pc } from "@stacks/transactions";
 import { DEPLOYER, SBTC_CONTRACT, USDCX_CONTRACT } from "@/lib/constants";
 import { queryKeys } from "@/lib/queryKeys";
 import { useTransactionToast } from "@/components/common/TransactionToast";
@@ -46,7 +46,7 @@ export function useBorrow() {
         await request("stx_callContract", {
           contract: `${DEPLOYER}.collateral-manager-v2`,
           functionName: depositFn,
-          functionArgs: [Cl.uint(collateralAmount)],
+          functionArgs: [uintCV(collateralAmount)],
           network: networkName,
           postConditionMode: "deny",
           postConditions: collateralPostConditions,
@@ -64,8 +64,8 @@ export function useBorrow() {
           contract: `${DEPLOYER}.collateral-manager-v2`,
           functionName: "borrow",
           functionArgs: [
-            Cl.uint(borrowAmount),
-            Cl.stringAscii(collateralAsset),
+            uintCV(borrowAmount),
+            stringAsciiCV(collateralAsset),
           ],
           network: networkName,
           postConditionMode: "deny",
@@ -106,8 +106,8 @@ export function useBorrow() {
           contract: `${DEPLOYER}.collateral-manager-v2`,
           functionName: "borrow",
           functionArgs: [
-            Cl.uint(borrowAmount),
-            Cl.stringAscii(collateralAsset),
+            uintCV(borrowAmount),
+            stringAsciiCV(collateralAsset),
           ],
           network: networkName,
           postConditionMode: "deny",

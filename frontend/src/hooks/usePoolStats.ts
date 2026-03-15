@@ -1,8 +1,9 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { fetchCallReadOnlyFunction, Cl, cvToValue } from "@stacks/transactions";
-import { DEPLOYER, NETWORK, type AssetId } from "@/lib/constants";
+import { fetchCallReadOnlyFunction, stringAsciiCV, cvToValue } from "@stacks/transactions";
+import { DEPLOYER, type AssetId } from "@/lib/constants";
+import { getReadOnlyNetwork } from "@/lib/stacks";
 import { queryKeys } from "@/lib/queryKeys";
 import { cvField } from "@/lib/clarity";
 import type { PoolStats } from "@/types/protocol";
@@ -15,8 +16,8 @@ async function fetchPoolStats(assetId: string): Promise<PoolStats> {
       contractAddress: DEPLOYER,
       contractName: "lending-pool-v2",
       functionName: "get-pool-stats",
-      functionArgs: [Cl.stringAscii(assetId)],
-      network: NETWORK as "mainnet" | "testnet" | "devnet",
+      functionArgs: [stringAsciiCV(assetId)],
+      network: getReadOnlyNetwork(),
       senderAddress: DEPLOYER,
     });
 

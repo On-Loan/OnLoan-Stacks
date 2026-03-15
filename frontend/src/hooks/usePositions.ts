@@ -1,8 +1,9 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { fetchCallReadOnlyFunction, Cl, cvToValue } from "@stacks/transactions";
-import { DEPLOYER, NETWORK } from "@/lib/constants";
+import { fetchCallReadOnlyFunction, principalCV, stringAsciiCV, cvToValue } from "@stacks/transactions";
+import { DEPLOYER } from "@/lib/constants";
+import { getReadOnlyNetwork } from "@/lib/stacks";
 import { queryKeys } from "@/lib/queryKeys";
 import { cvField } from "@/lib/clarity";
 import { useWallet } from "@/providers/WalletProvider";
@@ -20,10 +21,10 @@ async function fetchPosition(
       contractName: "collateral-manager-v2",
       functionName: "get-position",
       functionArgs: [
-        Cl.principal(user),
-        Cl.stringAscii(collateralType),
+        principalCV(user),
+        stringAsciiCV(collateralType),
       ],
-      network: NETWORK as "mainnet" | "testnet" | "devnet",
+      network: getReadOnlyNetwork(),
       senderAddress: DEPLOYER,
     });
 
@@ -40,10 +41,10 @@ async function fetchPosition(
           contractName: "liquidation-engine-v2",
           functionName: "get-health-factor",
           functionArgs: [
-            Cl.principal(user),
-            Cl.stringAscii(collateralType),
+            principalCV(user),
+            stringAsciiCV(collateralType),
           ],
-          network: NETWORK as "mainnet" | "testnet" | "devnet",
+          network: getReadOnlyNetwork(),
           senderAddress: DEPLOYER,
         });
         const hfRaw = cvToValue(hfResult);

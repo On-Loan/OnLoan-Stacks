@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { request } from "@stacks/connect";
-import { Cl } from "@stacks/transactions";
+import { principalCV, stringAsciiCV } from "@stacks/transactions";
 import { DEPLOYER, ASSETS } from "@/lib/constants";
 import { formatUsd, truncateAddress } from "@/lib/format";
 import { useLiquidations, type LiquidatablePosition } from "@/hooks/useLiquidations";
@@ -28,8 +28,8 @@ export default function LiquidatePage() {
         contract: `${DEPLOYER}.liquidation-engine`,
         functionName: "liquidate",
         functionArgs: [
-          Cl.principal(selected.borrower),
-          Cl.stringAscii(selected.collateralType),
+          principalCV(selected.borrower),
+          stringAsciiCV(selected.collateralType),
         ],
         network: networkName,
         postConditionMode: "deny",
