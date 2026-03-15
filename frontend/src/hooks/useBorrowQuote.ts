@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { fetchCallReadOnlyFunction, stringAsciiCV, uintCV, cvToValue } from "@stacks/transactions";
+import { stringAsciiCV, uintCV } from "@stacks/transactions";
 import {
   DEPLOYER,
   PYTH_ENDPOINT,
@@ -11,7 +11,7 @@ import {
 } from "@/lib/constants";
 import { queryKeys } from "@/lib/queryKeys";
 import { cvField } from "@/lib/clarity";
-import { getReadOnlyNetwork } from "@/lib/stacks";
+import { callReadOnlyValue } from "@/lib/stacks";
 import { useDebounce } from "@/hooks/useDebounce";
 import type { BorrowQuote } from "@/types/protocol";
 
@@ -27,16 +27,13 @@ async function fetchOnChainQuote(
   amount: bigint
 ): Promise<BorrowQuote | null> {
   try {
-    const result = await fetchCallReadOnlyFunction({
+    const raw = await callReadOnlyValue({
       contractAddress: DEPLOYER,
       contractName: "collateral-manager-v2",
       functionName: "get-borrow-quote",
       functionArgs: [stringAsciiCV(collateralAsset), uintCV(amount)],
-      network: getReadOnlyNetwork(),
       senderAddress: DEPLOYER,
     });
-
-    const raw = cvToValue(result);
     if (raw && typeof raw === "object" && "value" in raw) {
       const v = raw.value as Record<string, unknown>;
       return {

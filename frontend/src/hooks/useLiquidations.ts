@@ -1,10 +1,10 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { fetchCallReadOnlyFunction, principalCV, stringAsciiCV, cvToValue } from "@stacks/transactions";
+import { principalCV, stringAsciiCV } from "@stacks/transactions";
 import { DEPLOYER } from "@/lib/constants";
 import { cvField } from "@/lib/clarity";
-import { getApiUrl, getReadOnlyNetwork } from "@/lib/stacks";
+import { getApiUrl, callReadOnlyValue } from "@/lib/stacks";
 
 interface LiquidatablePosition {
   borrower: string;
@@ -60,7 +60,7 @@ async function checkLiquidatable(
   collateralType: string
 ): Promise<LiquidatablePosition | null> {
   try {
-    const result = await fetchCallReadOnlyFunction({
+    const result = await callReadOnlyValue({
       contractAddress: DEPLOYER,
       contractName: "liquidation-engine-v2",
       functionName: "is-liquidatable",
@@ -68,17 +68,16 @@ async function checkLiquidatable(
         principalCV(borrower),
         stringAsciiCV(collateralType),
       ],
-      network: getReadOnlyNetwork(),
       senderAddress: DEPLOYER,
     });
 
-    const raw = cvToValue(result);
+    const raw = result;
     const isLiquidatable =
       raw === true || (typeof raw === "object" && raw !== null && "value" in raw && raw.value === true);
 
     if (!isLiquidatable) return null;
 
-    const posResult = await fetchCallReadOnlyFunction({
+    const posRaw = await callReadOnlyValue({
       contractAddress: DEPLOYER,
       contractName: "collateral-manager-v2",
       functionName: "get-position",
@@ -86,11 +85,9 @@ async function checkLiquidatable(
         principalCV(borrower),
         stringAsciiCV(collateralType),
       ],
-      network: getReadOnlyNetwork(),
       senderAddress: DEPLOYER,
     });
 
-    const posRaw = cvToValue(posResult);
     if (posRaw && typeof posRaw === "object" && "value" in posRaw) {
       const v = posRaw.value as Record<string, unknown>;
       return {

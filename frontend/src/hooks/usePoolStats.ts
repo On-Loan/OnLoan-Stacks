@@ -1,9 +1,9 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { fetchCallReadOnlyFunction, stringAsciiCV, cvToValue } from "@stacks/transactions";
+import { stringAsciiCV } from "@stacks/transactions";
 import { DEPLOYER, type AssetId } from "@/lib/constants";
-import { getReadOnlyNetwork } from "@/lib/stacks";
+import { callReadOnlyValue } from "@/lib/stacks";
 import { queryKeys } from "@/lib/queryKeys";
 import { cvField } from "@/lib/clarity";
 import type { PoolStats } from "@/types/protocol";
@@ -12,16 +12,15 @@ const POOL_ASSETS: AssetId[] = ["stx", "sbtc", "usdcx"];
 
 async function fetchPoolStats(assetId: string): Promise<PoolStats> {
   try {
-    const result = await fetchCallReadOnlyFunction({
+    const result = await callReadOnlyValue({
       contractAddress: DEPLOYER,
       contractName: "lending-pool-v2",
       functionName: "get-pool-stats",
       functionArgs: [stringAsciiCV(assetId)],
-      network: getReadOnlyNetwork(),
       senderAddress: DEPLOYER,
     });
 
-    const raw = cvToValue(result);
+    const raw = result;
     if (raw && typeof raw === "object" && "value" in raw) {
       const v = raw.value as Record<string, unknown>;
       const totalDeposits = BigInt(cvField(v["total-deposits"]));

@@ -3,9 +3,17 @@ import { renderHook, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createElement } from "react";
 import type { ReactNode } from "react";
-import { fetchCallReadOnlyFunction } from "@stacks/transactions";
+import { callReadOnlyValue } from "@/lib/stacks";
 
-const mockFetchReadOnly = vi.mocked(fetchCallReadOnlyFunction);
+vi.mock("@/lib/stacks", async () => {
+  const actual = await vi.importActual<typeof import("@/lib/stacks")>("@/lib/stacks");
+  return {
+    ...actual,
+    callReadOnlyValue: vi.fn(() => Promise.resolve({ type: 1, value: BigInt(0) })),
+  };
+});
+
+const mockCallReadOnly = vi.mocked(callReadOnlyValue);
 
 function createWrapper() {
   const queryClient = new QueryClient({
@@ -34,17 +42,13 @@ describe("useBorrowQuote", () => {
     );
 
     expect(result.current.data).toBeUndefined();
-    expect(mockFetchReadOnly).not.toHaveBeenCalled();
+    expect(mockCallReadOnly).not.toHaveBeenCalled();
   });
 
-  it("calls fetchCallReadOnlyFunction for valid amount", async () => {
-    mockFetchReadOnly.mockResolvedValue({
-      type: 7,
+  it("calls callReadOnlyValue for valid amount", async () => {
+    mockCallReadOnly.mockResolvedValue({
       value: {
-        type: 12,
-        value: {
-          "collateral-value-usd": { type: 1, value: BigInt(50000000000) },
-        },
+        "collateral-value-usd": { value: BigInt(50000000000) },
       },
     } as never);
 
@@ -57,12 +61,12 @@ describe("useBorrowQuote", () => {
 
     await waitFor(
       () => {
-        expect(mockFetchReadOnly).toHaveBeenCalled();
+        expect(mockCallReadOnly).toHaveBeenCalled();
       },
       { timeout: 2000 }
     );
 
-    expect(mockFetchReadOnly).toHaveBeenCalledWith(
+    expect(mockCallReadOnly).toHaveBeenCalledWith(
       expect.objectContaining({
         contractName: "collateral-manager-v2",
         functionName: "get-borrow-quote",
@@ -81,11 +85,11 @@ describe("useBorrowQuote", () => {
     // Wait past debounce period
     await new Promise((r) => setTimeout(r, 400));
 
-    expect(mockFetchReadOnly).not.toHaveBeenCalled();
+    expect(mockCallReadOnly).not.toHaveBeenCalled();
   });
 
   it("returns null when API errors", async () => {
-    mockFetchReadOnly.mockRejectedValue(new Error("Network error"));
+    mockCallReadOnly.mockRejectedValue(new Error("Network error"));
 
     const { useBorrowQuote } = await import("@/hooks/useBorrowQuote");
 

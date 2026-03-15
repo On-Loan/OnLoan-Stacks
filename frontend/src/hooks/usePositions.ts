@@ -1,9 +1,9 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { fetchCallReadOnlyFunction, principalCV, stringAsciiCV, cvToValue } from "@stacks/transactions";
+import { principalCV, stringAsciiCV } from "@stacks/transactions";
 import { DEPLOYER } from "@/lib/constants";
-import { getReadOnlyNetwork } from "@/lib/stacks";
+import { callReadOnlyValue } from "@/lib/stacks";
 import { queryKeys } from "@/lib/queryKeys";
 import { cvField } from "@/lib/clarity";
 import { useWallet } from "@/providers/WalletProvider";
@@ -16,7 +16,7 @@ async function fetchPosition(
   collateralType: string
 ): Promise<CollateralPosition | null> {
   try {
-    const result = await fetchCallReadOnlyFunction({
+    const raw = await callReadOnlyValue({
       contractAddress: DEPLOYER,
       contractName: "collateral-manager-v2",
       functionName: "get-position",
@@ -24,11 +24,9 @@ async function fetchPosition(
         principalCV(user),
         stringAsciiCV(collateralType),
       ],
-      network: getReadOnlyNetwork(),
       senderAddress: DEPLOYER,
     });
 
-    const raw = cvToValue(result);
     if (raw && typeof raw === "object" && "value" in raw) {
       const v = raw.value as Record<string, unknown>;
       const collateralAmount = BigInt(cvField(v["collateral-amount"]));
@@ -36,7 +34,7 @@ async function fetchPosition(
 
       let healthFactor = 2.0;
       try {
-        const hfResult = await fetchCallReadOnlyFunction({
+        const hfRaw = await callReadOnlyValue({
           contractAddress: DEPLOYER,
           contractName: "liquidation-engine-v2",
           functionName: "get-health-factor",
@@ -44,10 +42,8 @@ async function fetchPosition(
             principalCV(user),
             stringAsciiCV(collateralType),
           ],
-          network: getReadOnlyNetwork(),
           senderAddress: DEPLOYER,
         });
-        const hfRaw = cvToValue(hfResult);
         if (hfRaw && typeof hfRaw === "object" && "value" in hfRaw) {
           healthFactor = Number(cvField(hfRaw)) / 100;
         }
