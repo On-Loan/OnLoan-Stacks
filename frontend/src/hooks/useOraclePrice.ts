@@ -42,8 +42,8 @@ export function useOraclePrice(assetId: string) {
   return useQuery({
     queryKey: queryKeys.oracle.price(assetId),
     queryFn: () => fetchOraclePrice(assetId),
-    staleTime: 10_000,
-    refetchInterval: 15_000,
+    staleTime: 30_000,
+    refetchInterval: 60_000,
     enabled: !!FEED_MAP[assetId],
   });
 }

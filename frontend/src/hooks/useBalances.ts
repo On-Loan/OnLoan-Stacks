@@ -87,8 +87,8 @@ export function useBalances() {
       ]);
       return { stx, sbtc, usdcx };
     },
-    staleTime: 15_000,
-    refetchInterval: 30_000,
+    staleTime: 30_000,
+    refetchInterval: 60_000,
     enabled: !!stxAddress,
   });
 }
@@ -99,8 +99,8 @@ export function useLenderDeposit(assetId: string) {
   return useQuery({
     queryKey: ["lender-deposit", stxAddress, assetId],
     queryFn: () => fetchLenderDeposit(stxAddress!, assetId),
-    staleTime: 15_000,
-    refetchInterval: 30_000,
+    staleTime: 30_000,
+    refetchInterval: 60_000,
     enabled: !!stxAddress,
   });
 }
