@@ -2,6 +2,9 @@
 
 > Lend your crypto. Borrow against it. No middlemen. No banks. Just smart contracts on Bitcoin.
 
+**Website:** [https://onloan-stacks.vercel.app/](https://onloan-stacks.vercel.app/)  
+**Video Demo:** [YouTube](https://youtube.com)
+
 ![Stacks](https://img.shields.io/badge/Built%20on-Stacks%20(Bitcoin%20L2)-orange)
 ![Clarity](https://img.shields.io/badge/Smart%20Contracts-Clarity%20v2-orange)
 ![sBTC](https://img.shields.io/badge/sBTC-Bitcoin%20Peg-F7931A)

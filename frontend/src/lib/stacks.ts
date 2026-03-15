@@ -19,6 +19,8 @@ export function getNetwork(): StacksNetwork {
 }
 
 export function getApiUrl(): string {
+  // In the browser, proxy through Next.js rewrites to avoid CORS
+  if (typeof window !== "undefined") return "/api/stacks";
   return (
     process.env.NEXT_PUBLIC_STACKS_API_URL ??
     defaultUrlFromNetwork(getNetwork())

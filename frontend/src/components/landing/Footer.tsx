@@ -7,15 +7,15 @@ const footerLinks = [
     links: [
       { label: "Dashboard", href: "/dashboard" },
       { label: "Markets", href: "/dashboard" },
-      { label: "Documentation", href: "#" },
+      { label: "Documentation", href: "https://github.com/On-Loan/OnLoan-Stacks.git" },
     ],
   },
   {
     heading: "Community",
     links: [
-      { label: "Twitter", href: "#" },
-      { label: "Discord", href: "#" },
-      { label: "GitHub", href: "#" },
+      { label: "Twitter", href: "https://x.com/akanimoh__" },
+      { label: "Discord", href: "https://x.com/akanimoh__" },
+      { label: "GitHub", href: "https://github.com/On-Loan/OnLoan-Stacks.git" },
     ],
   },
   {

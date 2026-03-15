@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchCallReadOnlyFunction, Cl, cvToValue } from "@stacks/transactions";
 import { DEPLOYER, NETWORK } from "@/lib/constants";
 import { cvField } from "@/lib/clarity";
+import { getApiUrl } from "@/lib/stacks";
 
 interface LiquidatablePosition {
   borrower: string;
@@ -16,8 +17,7 @@ interface LiquidatablePosition {
 
 const KNOWN_BORROWERS_KEY = ["liquidations", "all"] as const;
 
-const API_URL =
-  process.env.NEXT_PUBLIC_STACKS_API_URL ?? "https://api.testnet.hiro.so";
+const API_URL = getApiUrl();
 
 async function discoverBorrowers(): Promise<string[]> {
   try {
