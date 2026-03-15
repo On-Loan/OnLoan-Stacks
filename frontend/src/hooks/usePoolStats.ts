@@ -13,7 +13,7 @@ async function fetchPoolStats(assetId: string): Promise<PoolStats> {
   try {
     const result = await fetchCallReadOnlyFunction({
       contractAddress: DEPLOYER,
-      contractName: "lending-pool",
+      contractName: "lending-pool-v2",
       functionName: "get-pool-stats",
       functionArgs: [Cl.stringAscii(assetId)],
       network: NETWORK as "mainnet" | "testnet" | "devnet",

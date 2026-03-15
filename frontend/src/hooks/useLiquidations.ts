@@ -21,7 +21,7 @@ const API_URL =
 
 async function discoverBorrowers(): Promise<string[]> {
   try {
-    const url = `${API_URL}/extended/v1/contract/${DEPLOYER}.collateral-manager/events?limit=50`;
+    const url = `${API_URL}/extended/v1/contract/${DEPLOYER}.collateral-manager-v2/events?limit=50`;
     const res = await fetch(url);
     if (!res.ok) return [];
     const json = await res.json();
@@ -62,7 +62,7 @@ async function checkLiquidatable(
   try {
     const result = await fetchCallReadOnlyFunction({
       contractAddress: DEPLOYER,
-      contractName: "liquidation-engine",
+      contractName: "liquidation-engine-v2",
       functionName: "is-liquidatable",
       functionArgs: [
         Cl.principal(borrower),
@@ -80,7 +80,7 @@ async function checkLiquidatable(
 
     const posResult = await fetchCallReadOnlyFunction({
       contractAddress: DEPLOYER,
-      contractName: "collateral-manager",
+      contractName: "collateral-manager-v2",
       functionName: "get-position",
       functionArgs: [
         Cl.principal(borrower),

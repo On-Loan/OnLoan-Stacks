@@ -53,7 +53,7 @@ async function fetchLenderDeposit(
   try {
     const result = await fetchCallReadOnlyFunction({
       contractAddress: DEPLOYER,
-      contractName: "lending-pool",
+      contractName: "lending-pool-v2",
       functionName: "get-lender-balance",
       functionArgs: [Cl.principal(address), Cl.stringAscii(assetId)],
       network: NETWORK as "mainnet" | "testnet" | "devnet",

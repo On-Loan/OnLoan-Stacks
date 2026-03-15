@@ -51,11 +51,13 @@ export function BorrowQuotePreview({
     );
   }
 
+  // On-chain values use 8-decimal format (1e8 = $1.00)
+  const ORACLE_DECIMALS = 8;
   const collateralValueUsd =
-    Number(quote.collateralValueUsd) / 10 ** usdcx.decimals;
-  const oraclePrice = Number(quote.oraclePrice) / 10 ** usdcx.decimals;
+    Number(quote.collateralValueUsd) / 10 ** ORACLE_DECIMALS;
+  const oraclePrice = Number(quote.oraclePrice) / 10 ** ORACLE_DECIMALS;
   const maxBorrowable =
-    Number(quote.maxBorrowableUsdcx) / 10 ** usdcx.decimals;
+    Number(quote.maxBorrowableUsdcx) / 10 ** ORACLE_DECIMALS;
 
   return (
     <div className="space-y-3 p-4 bg-surface-card border border-zinc-800 rounded-2xl">

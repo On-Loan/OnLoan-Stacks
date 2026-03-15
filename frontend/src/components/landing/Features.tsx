@@ -55,7 +55,7 @@ export function Features() {
             transition={{ delay: i * 0.1, duration: 0.5 }}
           >
             <Card className="group h-full transition-all hover:border-onloan-orange/20 hover:shadow-lg hover:shadow-onloan-orange/5">
-              <CardContent className="flex gap-4 p-6">
+              <CardContent className="flex gap-5 p-7">
                 <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-onloan-orange/10 group-hover:bg-onloan-orange/20 transition-colors">
                   <f.icon className="h-5 w-5 text-onloan-orange" />
                 </div>

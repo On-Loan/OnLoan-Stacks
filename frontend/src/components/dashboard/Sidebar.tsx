@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -30,12 +31,12 @@ export function Sidebar() {
 
   return (
     <aside className="hidden md:flex flex-col fixed left-0 top-0 h-screen w-64 bg-surface-card border-r border-zinc-800 z-40">
-      <div className="flex items-center gap-2 px-6 py-5">
-        <div className="h-8 w-8 rounded-lg bg-onloan-orange flex items-center justify-center text-white font-bold text-sm">
-          OL
-        </div>
-        <span className="text-lg font-bold text-white">OnLoan</span>
-      </div>
+      <Link href="/" className="flex items-center gap-2 px-6 py-5">
+        <Image src="/logo.svg" alt="OnLoan" width={32} height={32} className="h-8 w-8" />
+        <span className="text-lg font-bold text-white">
+          On<span className="text-onloan-orange">Loan</span>
+        </span>
+      </Link>
 
       <nav className="flex-1 px-3 mt-2 space-y-1">
         {navItems.map((item) => {

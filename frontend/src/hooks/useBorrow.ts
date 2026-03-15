@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { request } from "@stacks/connect";
 import { Cl, Pc } from "@stacks/transactions";
-import { DEPLOYER, SBTC_CONTRACT } from "@/lib/constants";
+import { DEPLOYER, SBTC_CONTRACT, USDCX_CONTRACT } from "@/lib/constants";
 import { queryKeys } from "@/lib/queryKeys";
 import { useTransactionToast } from "@/components/common/TransactionToast";
 import { useNetwork } from "@/providers/NetworkProvider";
@@ -44,7 +44,7 @@ export function useBorrow() {
               ];
 
         await request("stx_callContract", {
-          contract: `${DEPLOYER}.collateral-manager`,
+          contract: `${DEPLOYER}.collateral-manager-v2`,
           functionName: depositFn,
           functionArgs: [Cl.uint(collateralAmount)],
           network: networkName,
@@ -53,8 +53,15 @@ export function useBorrow() {
         });
 
         tx.pending("Borrowing USDCx...");
+        const borrowPostConditions = [
+          Pc.principal(
+            `${DEPLOYER}.lending-pool-v2` as `${string}.${string}`
+          )
+            .willSendEq(borrowAmount)
+            .ft(USDCX_CONTRACT as `${string}.${string}`, "usdcx-token"),
+        ];
         const response = await request("stx_callContract", {
-          contract: `${DEPLOYER}.collateral-manager`,
+          contract: `${DEPLOYER}.collateral-manager-v2`,
           functionName: "borrow",
           functionArgs: [
             Cl.uint(borrowAmount),
@@ -62,7 +69,7 @@ export function useBorrow() {
           ],
           network: networkName,
           postConditionMode: "deny",
-          postConditions: [],
+          postConditions: borrowPostConditions,
         });
 
         if (response && "txid" in response) {
@@ -88,8 +95,15 @@ export function useBorrow() {
       setLoading(true);
       try {
         tx.pending("Borrowing USDCx...");
+        const borrowOnlyPostConditions = [
+          Pc.principal(
+            `${DEPLOYER}.lending-pool-v2` as `${string}.${string}`
+          )
+            .willSendEq(borrowAmount)
+            .ft(USDCX_CONTRACT as `${string}.${string}`, "usdcx-token"),
+        ];
         const response = await request("stx_callContract", {
-          contract: `${DEPLOYER}.collateral-manager`,
+          contract: `${DEPLOYER}.collateral-manager-v2`,
           functionName: "borrow",
           functionArgs: [
             Cl.uint(borrowAmount),
@@ -97,7 +111,7 @@ export function useBorrow() {
           ],
           network: networkName,
           postConditionMode: "deny",
-          postConditions: [],
+          postConditions: borrowOnlyPostConditions,
         });
 
         if (response && "txid" in response) {

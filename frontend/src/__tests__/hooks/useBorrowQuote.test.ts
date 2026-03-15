@@ -64,7 +64,7 @@ describe("useBorrowQuote", () => {
 
     expect(mockFetchReadOnly).toHaveBeenCalledWith(
       expect.objectContaining({
-        contractName: "collateral-manager",
+        contractName: "collateral-manager-v2",
         functionName: "get-borrow-quote",
       })
     );

@@ -65,7 +65,7 @@ export function useUpdateOracle() {
       // Update STX price
       tx.pending("Updating STX price oracle...");
       await request("stx_callContract", {
-        contract: `${DEPLOYER}.pyth-oracle-adapter`,
+        contract: `${DEPLOYER}.pyth-oracle-adapter-v2`,
         functionName: "update-price",
         functionArgs: [
           Cl.stringAscii("stx"),
@@ -81,7 +81,7 @@ export function useUpdateOracle() {
       // Update sBTC price
       tx.pending("Updating sBTC price oracle...");
       await request("stx_callContract", {
-        contract: `${DEPLOYER}.pyth-oracle-adapter`,
+        contract: `${DEPLOYER}.pyth-oracle-adapter-v2`,
         functionName: "update-price",
         functionArgs: [
           Cl.stringAscii("sbtc"),
@@ -97,7 +97,7 @@ export function useUpdateOracle() {
       // Update USDCx price (always $1 = 100000000 in 8-decimal format)
       tx.pending("Updating USDCx price oracle...");
       const response = await request("stx_callContract", {
-        contract: `${DEPLOYER}.pyth-oracle-adapter`,
+        contract: `${DEPLOYER}.pyth-oracle-adapter-v2`,
         functionName: "update-price",
         functionArgs: [
           Cl.stringAscii("usdcx"),

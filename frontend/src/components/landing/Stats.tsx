@@ -23,7 +23,7 @@ export function Stats() {
             transition={{ delay: i * 0.1, duration: 0.4 }}
           >
             <Card className="group transition-all hover:border-onloan-orange/30 hover:shadow-lg hover:shadow-onloan-orange/5">
-              <CardContent className="flex flex-col items-center gap-2 p-6 text-center">
+              <CardContent className="flex flex-col items-center gap-2 px-8 py-8 text-center">
                 <span className="text-3xl font-bold text-white group-hover:text-onloan-orange transition-colors">
                   {s.value}
                 </span>

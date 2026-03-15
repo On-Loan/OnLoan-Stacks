@@ -44,11 +44,11 @@ describe("BorrowQuotePreview", () => {
 
   it("renders quote data correctly", () => {
     const quote: BorrowQuote = {
-      collateralValueUsd: BigInt(50000_000000),
-      maxBorrowableUsdcx: BigInt(35000_000000),
+      collateralValueUsd: BigInt(50000_00000000),
+      maxBorrowableUsdcx: BigInt(35000_00000000),
       currentLtv: 70,
       healthFactor: 2,
-      oraclePrice: BigInt(68000_000000),
+      oraclePrice: BigInt(68000_00000000),
       assetLtvLimit: 70,
     };
 
@@ -68,11 +68,11 @@ describe("BorrowQuotePreview", () => {
 
   it("displays formatted USD values for the quote", () => {
     const quote: BorrowQuote = {
-      collateralValueUsd: BigInt(50000_000000),
-      maxBorrowableUsdcx: BigInt(35000_000000),
+      collateralValueUsd: BigInt(50000_00000000),
+      maxBorrowableUsdcx: BigInt(35000_00000000),
       currentLtv: 70,
       healthFactor: 2,
-      oraclePrice: BigInt(68000_000000),
+      oraclePrice: BigInt(68000_00000000),
       assetLtvLimit: 70,
     };
 
@@ -90,11 +90,11 @@ describe("BorrowQuotePreview", () => {
 
   it("shows sBTC symbol in oracle price for sbtc asset", () => {
     const quote: BorrowQuote = {
-      collateralValueUsd: BigInt(50000_000000),
-      maxBorrowableUsdcx: BigInt(35000_000000),
+      collateralValueUsd: BigInt(50000_00000000),
+      maxBorrowableUsdcx: BigInt(35000_00000000),
       currentLtv: 70,
       healthFactor: 2,
-      oraclePrice: BigInt(68000_000000),
+      oraclePrice: BigInt(68000_00000000),
       assetLtvLimit: 70,
     };
 

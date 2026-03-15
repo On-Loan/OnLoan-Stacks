@@ -17,7 +17,7 @@ async function fetchPosition(
   try {
     const result = await fetchCallReadOnlyFunction({
       contractAddress: DEPLOYER,
-      contractName: "collateral-manager",
+      contractName: "collateral-manager-v2",
       functionName: "get-position",
       functionArgs: [
         Cl.principal(user),
@@ -37,7 +37,7 @@ async function fetchPosition(
       try {
         const hfResult = await fetchCallReadOnlyFunction({
           contractAddress: DEPLOYER,
-          contractName: "liquidation-engine",
+          contractName: "liquidation-engine-v2",
           functionName: "get-health-factor",
           functionArgs: [
             Cl.principal(user),

@@ -24,8 +24,10 @@ export function BorrowForm({
   const [amount, setAmount] = useState("");
   const usdcx = ASSETS.usdcx;
 
+  // On-chain values use 8-decimal format (1e8 = $1.00)
+  const ORACLE_DECIMALS = 8;
   const maxBorrowable = quote
-    ? Number(quote.maxBorrowableUsdcx) / 10 ** usdcx.decimals
+    ? Number(quote.maxBorrowableUsdcx) / 10 ** ORACLE_DECIMALS
     : 0;
   const parsedAmount = parseFloat(amount || "0");
   const ltvPercent =
