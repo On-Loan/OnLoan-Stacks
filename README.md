@@ -408,7 +408,8 @@ For production sBTC bridging (BTC → sBTC), use the [`sbtc` npm package](https:
 
 | Document | Description |
 |----------|-------------|
-| [Architecture](docs/ARCHITECTURE.md) | Smart contract design, multi-asset data flow, and security model |
+| [Architecture](docs/ARC
+HITECTURE.md) | Smart contract design, multi-asset data flow, and security model |
 | [Testing](docs/TESTING.md) | Testing with Clarinet SDK + Vitest, fuzz tests, frontend tests |
 | [Deployment](docs/DEPLOYMENT.md) | Deployment playbook for testnet/mainnet + security checklist |
 | [Generation Prompt](docs/GENERATION_PROMPT.md) | Complete specification for developers building the MVP |
@@ -433,6 +434,40 @@ This is an **MVP** — it has not been audited. Key security measures in place:
 See [DEPLOYMENT.md](docs/DEPLOYMENT.md) for the full security checklist.
 
 ---
+
+## CI
+
+GitHub Actions (`ci.yml`) runs on every push/PR to `main`:
+- **Smart Contracts**: `clarinet check` + 79 contract tests (unit, integration, fuzz)
+- **Frontend**: Lint → Type-check → Vitest tests → Next.js build
+
+Frontend is deployed automatically via Vercel on push to `main`.
+
+---
+
+## Testnet Deployment
+
+All contracts are deployed on **Stacks testnet**:
+
+| Contract | Address |
+|----------|--------|
+| `onloan-core` | `ST1XHPEWSZYNN2QA9QG9JG9GHRVF6GZSFRWTFB5VV.onloan-core` |
+| `lending-pool` | `ST1XHPEWSZYNN2QA9QG9JG9GHRVF6GZSFRWTFB5VV.lending-pool` |
+| `collateral-manager` | `ST1XHPEWSZYNN2QA9QG9JG9GHRVF6GZSFRWTFB5VV.collateral-manager` |
+| `liquidation-engine` | `ST1XHPEWSZYNN2QA9QG9JG9GHRVF6GZSFRWTFB5VV.liquidation-engine` |
+| `pyth-oracle-adapter` | `ST1XHPEWSZYNN2QA9QG9JG9GHRVF6GZSFRWTFB5VV.pyth-oracle-adapter` |
+
+sBTC dependency (testnet): `ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT.sbtc-token`
+
+### Environment Variables
+
+| Variable | Description | Testnet Value |
+|----------|-------------|---------------|
+| `NEXT_PUBLIC_CONTRACT_DEPLOYER` | Deployer STX address | `ST1XHPEWSZYNN2QA9QG9JG9GHRVF6GZSFRWTFB5VV` |
+| `NEXT_PUBLIC_NETWORK` | Network target | `testnet` |
+| `NEXT_PUBLIC_STACKS_API_URL` | Stacks API endpoint | `https://api.testnet.hiro.so` |
+| `NEXT_PUBLIC_SBTC_CONTRACT` | sBTC token contract | `ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT.sbtc-token` |
+| `NEXT_PUBLIC_PYTH_ENDPOINT` | Pyth Hermes API URL | `https://hermes.pyth.network` |
 
 ---
 

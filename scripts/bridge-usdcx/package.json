@@ -1,0 +1,15 @@
+{
+  "name": "bridge-usdcx",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "deposit": "tsx deposit.ts",
+    "check": "tsx check-balance.ts"
+  },
+  "dependencies": {
+    "viem": "^2.30.0",
+    "c32check": "^2.0.0",
+    "dotenv": "^16.5.0",
+    "tsx": "^4.20.0"
+  }
+}
