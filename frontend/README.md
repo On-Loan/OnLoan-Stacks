@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# OnLoan — Frontend
 
-## Getting Started
+Next.js application for the OnLoan lending and borrowing protocol on Stacks.
 
-First, run the development server:
+## Setup
 
 ```bash
+# Install dependencies
+npm install
+
+# Copy environment variables
+cp .env.example .env.local
+
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+See `.env.example` for all required variables. Key settings:
 
-## Learn More
+| Variable | Description |
+|----------|-------------|
+| `NEXT_PUBLIC_NETWORK` | `testnet` or `mainnet` |
+| `NEXT_PUBLIC_CONTRACT_DEPLOYER` | Deployer STX address |
+| `NEXT_PUBLIC_STACKS_API_URL` | Stacks API endpoint |
+| `NEXT_PUBLIC_SBTC_CONTRACT` | sBTC token contract address |
+| `NEXT_PUBLIC_USDCX_CONTRACT` | USDCx token contract address |
+| `NEXT_PUBLIC_PYTH_ENDPOINT` | Pyth Hermes API URL |
 
-To learn more about Next.js, take a look at the following resources:
+## Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+src/
+├── app/                  # Next.js App Router pages
+│   ├── page.tsx          # Landing page
+│   └── dashboard/        # Dashboard pages (lend, borrow, positions, liquidate)
+├── components/
+│   ├── landing/          # Landing page sections (Hero, Stats, Features, etc.)
+│   ├── dashboard/        # Sidebar, Header, MobileNav
+│   ├── lending/          # Deposit and withdraw forms
+│   ├── borrowing/        # Collateral deposit, borrow quote, borrow form
+│   ├── positions/        # Position cards and lists
+│   ├── liquidation/      # Liquidation UI
+│   └── ui/               # Design system (Button, Card, Input, etc.)
+├── hooks/                # React hooks for contract interactions
+│   ├── useBalances.ts    # Wallet balance fetching
+│   ├── useBorrow.ts      # Borrow transaction flow
+│   ├── useBorrowQuote.ts # Real-time borrow quote with Pyth fallback
+│   ├── useDeposit.ts     # Lending deposit
+│   └── ...
+├── lib/
+│   ├── constants.ts      # Contract addresses, asset configs
+│   ├── format.ts         # Number/currency formatting
+│   └── stacks.ts         # Network configuration
+└── providers/            # Wallet and network context providers
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Testing
 
-## Deploy on Vercel
+```bash
+# Run all tests
+npm test
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Run tests in watch mode
+npm run test:watch
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+39 tests covering components and hooks using Vitest + React Testing Library.
+
+## Build
+
+```bash
+npm run build
+```

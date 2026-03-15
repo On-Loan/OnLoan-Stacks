@@ -1,0 +1,101 @@
+---
+id: 0
+name: Testnet deployment
+network: testnet
+stacks-node: "https://api.testnet.hiro.so"
+bitcoin-node: "http://blockstack:blockstacksystem@bitcoind.testnet.stacks.co:18332"
+plan:
+  batches:
+    - id: 0
+      transactions:
+        - requirement-publish:
+            contract-id: SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-registry
+            remap-sender: ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT
+            remap-principals:
+              SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4: ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT
+            cost: 112090
+            path: "./.cache/requirements/SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-registry.clar"
+            clarity-version: 3
+        - requirement-publish:
+            contract-id: SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token
+            remap-sender: ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT
+            remap-principals:
+              SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4: ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT
+            cost: 47590
+            path: "./.cache/requirements/SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token.clar"
+            clarity-version: 3
+        - requirement-publish:
+            contract-id: SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-deposit
+            remap-sender: ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT
+            remap-principals:
+              SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4: ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT
+            cost: 41510
+            path: "./.cache/requirements/SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-deposit.clar"
+            clarity-version: 3
+      epoch: "3.0"
+    - id: 1
+      transactions:
+        - contract-publish:
+            contract-name: onloan-core-v2
+            expected-sender: ST1XHPEWSZYNN2QA9QG9JG9GHRVF6GZSFRWTFB5VV
+            cost: 51040
+            path: contracts/onloan-core-v2.clar
+            anchor-block-only: true
+            clarity-version: 4
+        - contract-publish:
+            contract-name: lending-pool-v2
+            expected-sender: ST1XHPEWSZYNN2QA9QG9JG9GHRVF6GZSFRWTFB5VV
+            cost: 60570
+            path: contracts/lending-pool-v2.clar
+            anchor-block-only: true
+            clarity-version: 4
+        - contract-publish:
+            contract-name: oracle-trait-v2
+            expected-sender: ST1XHPEWSZYNN2QA9QG9JG9GHRVF6GZSFRWTFB5VV
+            cost: 2000
+            path: contracts/traits/oracle-trait-v2.clar
+            anchor-block-only: true
+            clarity-version: 4
+        - contract-publish:
+            contract-name: pyth-oracle-adapter-v2
+            expected-sender: ST1XHPEWSZYNN2QA9QG9JG9GHRVF6GZSFRWTFB5VV
+            cost: 19350
+            path: contracts/pyth-oracle-adapter-v2.clar
+            anchor-block-only: true
+            clarity-version: 4
+        - contract-publish:
+            contract-name: collateral-manager-v2
+            expected-sender: ST1XHPEWSZYNN2QA9QG9JG9GHRVF6GZSFRWTFB5VV
+            cost: 108370
+            path: contracts/collateral-manager-v2.clar
+            anchor-block-only: true
+            clarity-version: 4
+        - contract-publish:
+            contract-name: liquidation-engine-v2
+            expected-sender: ST1XHPEWSZYNN2QA9QG9JG9GHRVF6GZSFRWTFB5VV
+            cost: 48120
+            path: contracts/liquidation-engine-v2.clar
+            anchor-block-only: true
+            clarity-version: 4
+        - contract-publish:
+            contract-name: pool-trait-v2
+            expected-sender: ST1XHPEWSZYNN2QA9QG9JG9GHRVF6GZSFRWTFB5VV
+            cost: 3460
+            path: contracts/traits/pool-trait-v2.clar
+            anchor-block-only: true
+            clarity-version: 4
+        - contract-publish:
+            contract-name: sip-010-trait-v2
+            expected-sender: ST1XHPEWSZYNN2QA9QG9JG9GHRVF6GZSFRWTFB5VV
+            cost: 4370
+            path: contracts/traits/sip-010-trait-v2.clar
+            anchor-block-only: true
+            clarity-version: 4
+        - contract-publish:
+            contract-name: usdcx
+            expected-sender: ST1XHPEWSZYNN2QA9QG9JG9GHRVF6GZSFRWTFB5VV
+            cost: 15540
+            path: contracts/usdcx.clar
+            anchor-block-only: true
+            clarity-version: 4
+      epoch: "3.3"
